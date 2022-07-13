@@ -150,7 +150,7 @@ def product_post():
     img_url_receive = request.form['img_url_give']
     banner_url_receive = request.form['banner_url_give']
     youtube_receive = request.form['youtube_give']
-    dis_receive = request.form['discription_give']
+    disc_receive = request.form['discription_give']
     price_receive = request.form['price_give']
 
     doc = {
@@ -159,8 +159,8 @@ def product_post():
         'img_url' : img_url_receive,
         'banner_url' : banner_url_receive,
         'youtube' : youtube_receive,
-        'disc' : category_receive,
-        'price' : dis_receive,
+        'disc' : disc_receive,
+        'price' : price_receive,
 
     }
     db.game_info.insert_one(doc)
