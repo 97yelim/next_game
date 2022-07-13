@@ -1,0 +1,138 @@
+
+
+.youtube {
+    margin-top: 70px;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 비율 */
+}
+.video {
+    position: absolute;
+    top: 70px;
+    width: 100%; /* 부모에 맞게 꽉 채운다. */
+    height: 100%;
+}
+
+.wrap{
+    max-width: 1460px;
+    margin: 0 auto;
+}
+
+.contents{
+    display: flex;
+    justify-content: space-between;
+}
+.contents .title {
+    font-family: 'SUIT-Bold';
+    font-size: 2.4em;
+    margin-bottom: 0;
+    color: #fff;
+}
+.contents .price{
+    display: flex;
+}
+.contents .price p{
+    font-size: 2.4em;
+    margin-bottom: 0;
+    color: #fff;
+}
+
+.contents .price .buy-button{
+    background-color:var(--button-color);
+    color: #fff;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    border: none;
+    margin-left: 30px;
+}
+
+hr.wrap {
+    background-color: var(--line-color);
+    margin: 50px auto;
+    height: 1px;
+    border: none;
+}
+.pd-detail .game-title{
+    font-family: 'SUIT-SemiBold';
+    font-size: 1.6em;
+    color: var(--text-color2);
+    margin-bottom: 40px;
+}
+
+.pd-detail .disc{
+    color: var(--text-color2);
+}
+
+.review-write {
+    display: flex;
+}
+
+.review-title{
+    font-family: 'SUIT-SemiBold';
+    font-size: 1.6em;
+    color: var(--text-color2);
+    margin-bottom: 40px;
+}
+.review-write textarea {
+    display: block;
+    height: 100px;
+    resize: none;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    padding: 15px;
+    width: 100%;
+    min-height: 50px;
+    font-size: 18px;
+    border-radius: 10px;
+    margin-bottom: 100px;
+}
+.review-write .select {
+    margin-left: 30px;
+}
+.review-write .review-button {
+    width: 140px;
+    height: 100px;
+    margin-left: 30px;
+    color: #fff;
+    background-color:var(--button-color);
+    font-size: 1.2em;
+    padding: 10px 20px;
+    border: none;
+}
+
+.review-con {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.review-con .comments {
+    display: flex;
+    align-items: center;
+}
+
+.review-con .comments-right{
+    display: flex;
+    align-items: center;
+}
+.review-con .comments-right a {
+    margin-left: 10px;
+    color: var(--text-color1);
+}
+
+.review-con p.nick{
+    font-family: 'SUIT-SemiBold';
+    display: block;
+    width: 100px;
+    color: var(--text-color2);
+    align-items: center;
+}
+
+.review-con .comment {
+    color: var(--text-color2);
+}
+
+footer{
+    width: 100%;
+    height: 400px;
+}

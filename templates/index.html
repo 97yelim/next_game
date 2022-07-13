@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Webpage Title -->
+  <title>Home | Nextgame</title>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <!-- Font Awesome CSS -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/common.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/index.css') }}">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+  
+  <!-- swiper -->
+  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+  {% include 'head.html' %}
+  <script defer src="../static/js/index.js"></script>
+  <script>
+/*     $(document).ready(function () {
+            temp()
+        });
+
+    function temp() {
+      $.ajax({
+        type: "GET",
+        url: "/",
+        data: {
+          url_give: url,
+          title_give: title,
+          star_give: star,
+          rank_give: rank,
+          price_give: price
+        },
+        success: function (response) {
+          console.log(response)
+        }
+      })
+    } */
+  </script>
+  
+</head>
+
+<body>
+  <header>{% include 'header.html' %}</header>
+  <main class="main">
+    <div class="inner">
+      <h1>PROMOTION</h1>
+      <ul>
+        <li class="item">
+          <div class="img">
+            <div class="img-box item1"><a href="http://localhost:5000/detail/1"></a></div>
+          </div>
+          <div class="title-box">
+            <div class="title">
+              <span><a href="http://localhost:5000/detail/1">톰 클랜시의 더 디비전 2</a></span>
+            </div>
+            <div class="bottom-group">
+              <div class="rank">
+                <p class="star">⭐ <span class="num">9.7 점</span></p>
+                
+              </div>
+              <div class="price">
+                <span>₩ 30,000원</span>
+                <div class="buy">
+                  <a href="#">구매하기</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="promotion">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <a href="#"><img src="https://images6.alphacoders.com/929/thumb-1920-929023.jpg" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img
+                src="https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/3x4giCBAOMRFnrYo1Z3PPz/ed4cd8437316e3d06f786b805ca7520b/Division2-FreeTrial-hero_art-1920x1080_NO-LOGO.jpg"
+                alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://www.gtaku.net/gallery/1588743555aa2.jpg" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://blog.kakaocdn.net/dn/dbiLiT/btqQJFd8iWn/5p3fKpBKYRsmJfKhd0WtK0/img.jpg" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="http://itcm.co.kr/files/attach/images/813/815/601/007/8185337c7c69bc98ab693ce0b329a712.jpg" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://gmedia.playstation.com/is/image/SIEPDC/sekiro-shadows-die-twice-screen-01-ps4-eu-21jun18?$native$" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://wallpaperaccess.com/full/391154.jpg" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://www.gtaku.net/files/attach/images/68/838/148/9b4be613a65351376d0352de744096d8.jpg" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://i.pinimg.com/originals/fd/c2/24/fdc2247a17c911db8bcdc65b6aa4557b.jpg" alt=""></a>
+          </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <!--        <div class="swiper-pagination"></div>-->
+      </div>
+    </div>
+
+    <div class="inner">
+        <h1>HOT</h1>
+      <ul>
+        
+      </ul>
+    </div>
+
+    <div class="promotion">
+      <div class="swiper mySwiper2">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <a href="#"><img src="https://wallpaperaccess.com/full/827473.png" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img
+                src="https://i.pinimg.com/originals/61/d8/a1/61d8a1867537bd19d058de1c4e2cd2d7.jpg"
+                alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://t1.daumcdn.net/cfile/tistory/9929AB375B45392122" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://cdn.wccftech.com/wp-content/uploads/2019/07/Monster-Hunter-World-Iceborne-gameplay.jpg" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://wallpaperaccess.com/full/414982.jpg" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://pbs.twimg.com/media/E_z0PU7UcAk0pxq.jpg:large" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://images4.alphacoders.com/676/thumb-1920-676369.jpg" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://wallpapercave.com/wp/wp2309666.jpg" alt=""></a>
+          </div>
+          <div class="swiper-slide">
+            <a href="#"><img src="https://wallpaperaccess.com/full/889464.jpg" alt=""></a>
+          </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <!--        <div class="swiper-pagination"></div>-->
+      </div>
+    </div>
+
+
+  </main>
+
+</body>
+</html>
