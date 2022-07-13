@@ -132,8 +132,10 @@
                       <div>
                         <input id="post-img" class="input is-primary form-ctrl" type="text" placeholder="게임 이미지 url">
                       </div>
-
-                      
+                      <!-- input // 게임 배너 이미지 -->
+                      <div>
+                        <input id="post-img" class="input is-primary form-ctrl" type="text" placeholder="게임 배너 url">
+                      </div>
                       <!-- input // 게임 영상 링크 -->
                       <div>
                         <input id="game-video" class="input is-primary form-ctrl" type="text" placeholder="게임 영상 링크">
@@ -158,7 +160,7 @@
                       <!-- 저장하기 버튼 -->
                       <button class="button is-link save-page__btn--save" onclick="savePost()">등록</button>
                       <!-- 취소하기 버튼 -->
-                      <button class="button is-danger save-page__btn--cancel">취소</button>
+                      <button class="button is-danger save-page__btn--cancel" onclick="history.back()">취소</button>
                   </div>
               </div>
               <!-- 모달 창 : 포스트 작성 양식 코드 마무리 -->

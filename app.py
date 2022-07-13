@@ -42,7 +42,7 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        return render_template('index.html', user_info=user_info, nickname=user_info["nickname"], user_category=user_info["usercategory"])
+        return render_template('index.html', user_info=user_info, user_category=user_info["usercategory"])
 
 
     except jwt.ExpiredSignatureError:
@@ -121,9 +121,7 @@ def check_dup():
 
 
 
-@app.route('/product')
-def product():
-    return render_template('product.html')
+
 
 
 
@@ -151,7 +149,7 @@ def detail(num):
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        return render_template('detail.html', user_info=user_info)
+        return render_template('detail.html', user_info=user_info,user_category=user_info["usercategory"])
 
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
