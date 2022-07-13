@@ -21,73 +21,35 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
         <script>
-              function listing() {
-    $.ajax({
-        type: "GET",
-        url: "/main",
-        data: {},
-        success: function (response) {
-            let capingtems = response['all_capingtem']
-            for (let i = 0; i < capingtems.length; i++) {
-                let index = capingtems[i]['num']
-                let title = capingtems[i]['title']
-                let category = capingtems[i]['category']
-                let price = capingtems[i]['price']
-                let comment = capingtems[i]['comment']
-                let img = capingtems[i]['img']
-                let starpoints = capingtems[i]['starpoints']
-
-                let temp_html = `<div class="card h-100">
-                                        <img width="250" height="200" alt="${title}"
-                                             src="../static/${img}">
-                                        <div class="card-body">
-                                            <a href="/main/${index}">
-                                            <h5 class="card-title">${title}</h5>
-                                            <p class="card-category">${category}</p>
-                                            <p class="card-price">${price}</p>
-                                        
-                                        </div>
-                                    </div></a>`
-                $('#cards-box').append(temp_html)
-
-            }
-        }
-    })
-}
-
- /* 모달 창 JS 코드 시작 */
-
-    /* 파일 업로드 코드 */
-
 
     /* 포스트 저장 데이터 보내기 */
     function savePost() {
-        let form_data = new FormData();
-        let category = $('#post-category').val();
-        let title = $('#post-title').val();
-        let price = $('#post-price').val();
-        let explain = $('#post-explain').val();
-
-        form_data.append("file_give", file)
-        form_data.append("title_give", title)
-        form_data.append("category_give", category)
-        form_data.append("price_give", price)
-        form_data.append("explain_give", explain)
+        let game_category = $('#post-category').val()
+        let title = $('#post-title').val()
+        let img_url = $('#post-img').val()
+        let banner_url = $('#banner-img').val()
+        let youtube = $('#game-video').val()
+        let disc = $('#post-disc').val()
+        let price = $('#post-price').val()
 
         $.ajax({
-            type: "POST",
-            url: "/savepost",
-            data: form_data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                alert(response["msg"])
-                $('.modal').addClass("hidden");
-                window.location.reload()
-            }
-        });
-    }
+                type: 'POST',
+                url: '/product',
+                data: {
+                    game_category_give: game_category,
+                    title_give: title,
+                    img_url_give: img_url,
+                    banner_url_give: banner_url,
+                    youtube_give: youtube,
+                    disc_give:disc,
+                    price_give:price
+                },
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+            });
+    }  
 
         </script>
         {% include 'head.html' %}
@@ -101,20 +63,6 @@
                   <!-- form title  -->
                   <p class="title">제품 등록하기</p>
                   <div class="save-page__post--form">
-        
-                      <!-- 파일 첨부 : img 파일형식 제한 -->
-                      <!-- <div class="filebox form-ctrl">
-                          <label class="file-label">
-                              <input id="file" class="file-input" type="file" accept=".jpg, .jpeg, .png" name="resume">
-                              <span class="file-cta">
-                                               <span class="file-label">
-                                                   이미지 첨부 (jpg, jpeg, png)
-                                               </span>
-                              </span>
-                          </label>
-                      </div> -->
-                      
-                      
                       <!-- select // 카테고리 선택 -->
                       <div class="select is-primary form-ctrl">
                         <select id="post-category" class="form-ctrl">
@@ -134,7 +82,7 @@
                       </div>
                       <!-- input // 게임 배너 이미지 -->
                       <div>
-                        <input id="post-img" class="input is-primary form-ctrl" type="text" placeholder="게임 배너 url">
+                        <input id="banner-img" class="input is-primary form-ctrl" type="text" placeholder="게임 배너 url">
                       </div>
                       <!-- input // 게임 영상 링크 -->
                       <div>
@@ -142,7 +90,7 @@
                       </div>
                       <!-- input // 게임 설명-->
                       <div>
-                        <input id="post-explain" class="input is-primary form-ctrl" type="text" placeholder="게임을 설명해주세요">
+                        <input id="post-disc" class="input is-primary form-ctrl" type="text" placeholder="게임을 설명해주세요">
                       </div>
 
                       <!-- input // 가격 작성 -->
