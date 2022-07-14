@@ -148,7 +148,7 @@
   margin-left: 30px;
 }
 
-.buy > a {
+.buy > p {
   width: 100%;
   padding: 10px 20px;
   display: flex;
@@ -159,6 +159,7 @@
   font-weight: bold;
   transition: .5s;
   background-color: var(--button-color);
+  cursor: pointer;
 }
 .buy > a:hover{
   color: #000;

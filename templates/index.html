@@ -31,6 +31,10 @@
     $(document).ready(function () {
         get_info();
     });
+    
+    function buy (){
+          alert('구매 완료!')
+        }
 
     function get_info(){
       $.ajax({
@@ -60,9 +64,9 @@
                                           <p class="star">⭐ <span class="num">9.7 점</span></p>
                                         </div>
                                         <div class="price">
-                                          <span>${price}</span>
+                                          <span>￦ ${price}</span>
                                           <div class="buy">
-                                            <a href="#">구매하기</a>
+                                            <p onclick="buy()">구매하기</p>
                                           </div>
                                         </div>
                                       </div>
@@ -93,9 +97,9 @@
                                           <p class="star">⭐ <span class="num">9.7 점</span></p>
                                         </div>
                                         <div class="price">
-                                          <span>${price}</span>
+                                          <span>￦ ${price}</span>
                                           <div class="buy">
-                                            <a href="#">구매하기</a>
+                                            <p onclick="buy()">구매하기</p>
                                           </div>
                                         </div>
                                       </div>
@@ -123,7 +127,7 @@
   <main class="main">
     <div class="inner item-promotion">
       <div id="test"></div>
-      <h1>PROMOTION</h1>
+      <h1>특별세일</h1>
       <ul id="item-promotion">
       </ul>
     </div>
@@ -139,7 +143,7 @@
     </div>
 
     <div class="inner item-hot">
-        <h1>HOT</h1>
+        <h1>이 달의 인기게임</h1>
       <ul id="item-hot">
       </ul>
     </div>
