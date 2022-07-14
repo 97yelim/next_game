@@ -15,8 +15,8 @@
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/common.css') }}">
         <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/detail.css') }}">
-        
-        
+
+
         <!-- JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -25,8 +25,12 @@
             let getLink = window.location.search;
             let title = decodeURI(getLink.split('?')[1]);
             get_this_game(title);
-            listing();
+            show_posts()
         })
+
+        function buy (){
+          alert('구매 완료!')
+        }
 
         function get_this_game(title){
             $.ajax({
@@ -34,7 +38,7 @@
                 url: "/detailname",
                 data: {title_give: title},
                 success: function (reponse){
-                  console.log(reponse)
+                  {#console.log(reponse)#}
                   let youtube = reponse['title']['youtube']
                   let title = reponse['title']['title']
                   let price = reponse['title']['price']
@@ -45,10 +49,10 @@
 
                   let temp_title = `${title}`
                   $('#title').append(temp_title)
-                  
+
                   let temp_price = `${price} <span>원</span>`
                   $('#price').append(temp_price)
-                  
+
 
                   let temp_disc = `${disc}`
                   $('#disc').append(temp_disc)
@@ -61,7 +65,8 @@
           let comment = $('#review-comment').val();
           let grade = $('#select-grade').val();
           let user_nickname = '{{user_info.nickname}}';
-
+          let gametitle = $('#title').text();
+          
           if (comment == '') {
             alert('빈칸은 리뷰를 작성할 수 없습니다.');
             return;
@@ -74,6 +79,7 @@
               comment_give: comment,
               grade_give: grade,
               user_nickname_give: user_nickname,
+              gametitle_give: gametitle
             },
             success: function (response) {
               alert(response['msg']);
@@ -82,43 +88,72 @@
           });
         }
 
-        function get_posts() {
-            $.ajax({
-                type: "GET",
-                url: `/detail?${title}`,
-                data: {},
-                success: function (response) {
-                    // 해당 페이지의 식물과 관련된 데이터만 받아왔음
-                    if (response["result"] == "success") {
-                        {#console.log(response["posts"])#}
-                        let posts = response["posts"]
-                        for (let i = 0; i < posts.length; i++) {
-                            let post = posts[i]
+          function show_posts() {
+                  $.ajax({
+                      type: 'GET',
+                      url: '/get_posts/',
+                      data: {},
+                      success: function (response) {
+                          let rows = response['post']
+                          let game_title = $('#title').text()
 
-                            let temp_html = `<div class="card mb-3">
-									            <div class="card-body">
-									                <h5 class="card-title">${post['username']}</h5>
-									                <p class="card-text">${post['comment']}</p>
-									            </div>
-												<div class="comment_delete">
-                                                    <a href="#" class="delete" onclick="deleteStar('${post['comment']}')">삭제</a>
-                                                </div>
-									       </div>`
-                            $("#card-box").append(temp_html)
+                          console.log(game_title)
+                          for (let i=0;i<rows.length; i++) {
+                              console.log(rows)
+                              let comment = rows[i]['comment']
+                              let gametitle = rows[i]['gametitle']
+                              let grade = rows[i]['grade']
+                              let star = '⭐'.repeat(grade)
+                              let user_nickname = rows[i]['user_nickname']
+                              
+
+                              if(gametitle == game_title){
+                                let temp_html = `<div class="review_wrap">
+                                                    <div class="review">
+                                                      <div class="review_user">
+                                                        <p>${user_nickname}님</p>
+                                                        <div class="comment">${comment}</div>
+                                                      </div>
+                                                      <div class="del">
+                                                        <span>${star}</span>
+                                                      </div>
+                                                    </div>
+                                                    <hr class="wrap">
+                                                  </div>`
+                              $('#review').append(temp_html)
+                          }else{
+                            let temp_html = `<div class="review_wrap" style="display:none">
+                                                    <div class="review">
+                                                      <div class="review_user">
+                                                        <p>${user_nickname}님</p>
+                                                        <div class="comment">${comment}</div>
+                                                      </div>
+                                                      <div class="del">
+                                                        <span>${star}</span>
+                                                      </div>
+                                                    </div>
+                                                    <hr class="wrap">
+                                                  </div>`
+                              $('#review').append(temp_html)
+                          }
                         }
-                    }
-                }
-            })
-        }
+                      }
+                  });
+              }
+              
+              function review_del(){
+                alert('삭제되었습니다.')
+
+              }
         </script>
         {% include 'head.html' %}
-        
+
 
     </head>
     <body>
         <header>{% include 'header.html' %}</header>
         <section class="youtube" id="youtube">
-          <!-- <iframe class="video" width="560" height="315" src="https://www.youtube.com/embed/8jmuLrP-KIA?autoplay=1&mute=1 " title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->   
+          <!-- <iframe class="video" width="560" height="315" src="https://www.youtube.com/embed/8jmuLrP-KIA?autoplay=1&mute=1 " title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
         </script>
         </section>
         <section class="contents wrap">
@@ -149,7 +184,20 @@
           </div>
           <button class="review-button" onclick="review_post()">리뷰 작성</button>
         </div>
-        <div class="review" id="review">
+        <div class="review_view wrap" id="review">
+<!--           <div class="review_wrap">
+            <div class="review">
+              <div class="review_user">
+                <p>{{user_info.nickname}}님</p>
+                <div class="comment">디비전 3 언제 나옴</div>
+              </div>
+              <div class="del">
+                <span>⭐⭐⭐⭐⭐</span>
+                <span>삭제</span>
+              </div>
+            </div>
+            <hr class="wrap">
+          </div> -->
         </div>
         <footer></footer>
     </body>

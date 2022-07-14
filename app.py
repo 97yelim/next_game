@@ -1,3 +1,4 @@
+import re
 from pymongo import MongoClient
 import jwt
 import datetime
@@ -131,7 +132,6 @@ def nick_get():
 # 상품등록 ---------------------------
 @app.route('/product/save', methods=['POST'])
 def product_post():
-
     gamecategory_receive = request.form['game_category_give']
     title_receive = request.form['title_give']
     img_url_receive = request.form['img_url_give']
@@ -139,7 +139,7 @@ def product_post():
     youtube_receive = request.form['youtube_give']
     disc_receive = request.form['disc_give']
     price_receive = request.form['price_give']
-    print(category_receive)
+    print(gamecategory_receive)
 
     doc = {
         'gamecategory': gamecategory_receive,
@@ -163,9 +163,6 @@ def game_info_get():
     return jsonify({'game_info': game_info_list})
 
 
-
-
-
 # 상품 상세 페이지로 이동 + 닉네임 불러옴-----------------------------------------
 @app.route('/detail')
 def detail():
@@ -181,14 +178,12 @@ def detail():
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
-
 # 타겟 상품 상세 페이지로 이동 + 페이지에 해당하는 정보 불러오기-----------------------------------------
 @app.route('/detailname', methods=["POST"])
 def detail_game_info():
     title_receive = request.form['title_give']
-    game_title = db.game_info.find_one({'title': title_receive},{'_id': False})
+    game_title = db.game_info.find_one({'title': title_receive}, {'_id': False})
     return jsonify({'title': game_title})
-
 
 
 # 리뷰 작성-----------------------------------------
@@ -198,32 +193,23 @@ def review_post():
     comment_receive = request.form['comment_give']
     grade_receive = request.form['grade_give']
     user_nickname_receive = request.form['user_nickname_give']
+    gametitle_recevie = request.form['gametitle_give']
 
     doc = {
         'comment': comment_receive,
+        'gametitle':gametitle_recevie,
         'grade': grade_receive,
-        'user_nickname':user_nickname_receive,
+        'user_nickname': user_nickname_receive
     }
     print(doc)
     db.review.insert_one(doc)
     return jsonify({"msg": "저장되었습니다."})
 
 
-
 @app.route("/get_posts/", methods=['GET'])
 def get_posts():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 해당 페이지 식물 이름(target) 받아오기
-        target_receive = request.args.get("target_give")
-        # db에서 해당 페이지의 리뷰를 찾아 15개까지 보여줌
-        posts = list(db.posts.find({"target": target_receive}).sort("date", -1).limit(15))
-        for post in posts:
-            post["_id"] = str(post["_id"])
-        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts})
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+    posts = list(db.review.find({}, {'_id': False}))
+    return jsonify({"post": posts})
 
 
 if __name__ == '__main__':
