@@ -28,93 +28,109 @@
   {% include 'head.html' %}
   <script defer src="../static/js/index.js"></script>
   <script>
-/*     $(document).ready(function () {
-            temp()
-        });
+    $(document).ready(function () {
+        get_info();
+    });
 
-    function temp() {
+    function get_info(){
       $.ajax({
-        type: "GET",
-        url: "/",
-        data: {
-          url_give: url,
-          title_give: title,
-          star_give: star,
-          rank_give: rank,
-          price_give: price
-        },
-        success: function (response) {
-          console.log(response)
+          type: 'GET',
+          url: '/game_info',
+          data: {},
+          success: function (response) {
+            let rows = response['game_info']
+              for (let i = 0 ; i < rows.length; i++){
+                console.log(rows[i]['category'])
+                if(rows[i]['category'] == 'promotion'){
+                let title = rows[i]['title']
+                let img_url = rows[i]['img_url']
+                let banner_url = rows[i]['banner_url']
+                let price = rows[i]['price']
+
+                let temp_html = `<li class="item">
+                                    <div class="img">
+                                      <div class="img-box item1" style="background: url(${img_url}) no-repeat center / cover;"><a href="http://localhost:5000/detail?${title}"></a></div>
+                                    </div>
+                                    <div class="title-box">
+                                      <div class="title">
+                                        <span><a href="http://localhost:5000/detail?${title}">${title}</a></span>
+                                      </div>
+                                      <div class="bottom-group">
+                                        <div class="rank">
+                                          <p class="star">⭐ <span class="num">9.7 점</span></p>
+                                        </div>
+                                        <div class="price">
+                                          <span>${price}</span>
+                                          <div class="buy">
+                                            <a href="#">구매하기</a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+              `
+              let temp_banner = `<div class="swiper-slide">
+                                    <a href="#"><img src="${banner_url}" alt=""></a>
+                                 </div>
+              `
+              $('#item-promotion').append(temp_html)
+              $('#game-banner-pro').append(temp_banner)
+            }else{
+                let title = rows[i]['title']
+                let img_url = rows[i]['img_url']
+                let banner_url = rows[i]['banner_url']
+                let price = rows[i]['price']
+                let temp_html = `<li class="item">
+                                    <div class="img">
+                                      <div class="img-box item1" style="background: url(${img_url}) no-repeat center / cover;"><a href="http://localhost:5000/detail?${title}"></a></div>
+                                    </div>
+                                    <div class="title-box">
+                                      <div class="title">
+                                        <span><a href="http://localhost:5000/detail?${title}">${title}</a></span>
+                                      </div>
+                                      <div class="bottom-group">
+                                        <div class="rank">
+                                          <p class="star">⭐ <span class="num">9.7 점</span></p>
+                                        </div>
+                                        <div class="price">
+                                          <span>${price}</span>
+                                          <div class="buy">
+                                            <a href="#">구매하기</a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>`
+                let temp_banner = `<div class="swiper-slide">
+                                      <a href="#"><img src="${banner_url}" alt=""></a>
+                                  </div>
+                `
+
+              $('#item-hot').append(temp_html)
+              $('#game-banner-hot').append(temp_banner)
+              } 
+            }
         }
-      })
-    } */
+      });
+    }
+
   </script>
-  
+
 </head>
 
 <body>
   <header>{% include 'header.html' %}</header>
   <main class="main">
-    <div class="inner">
+    <div class="inner item-promotion">
+      <div id="test"></div>
       <h1>PROMOTION</h1>
-      <ul>
-        <li class="item">
-          <div class="img">
-            <div class="img-box item1"><a href="http://localhost:5000/detail/1"></a></div>
-          </div>
-          <div class="title-box">
-            <div class="title">
-              <span><a href="http://localhost:5000/detail/1">톰 클랜시의 더 디비전 2</a></span>
-            </div>
-            <div class="bottom-group">
-              <div class="rank">
-                <p class="star">⭐ <span class="num">9.7 점</span></p>
-                
-              </div>
-              <div class="price">
-                <span>₩ 30,000원</span>
-                <div class="buy">
-                  <a href="#">구매하기</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
+      <ul id="item-promotion">
       </ul>
     </div>
 
     <div class="promotion">
       <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <a href="#"><img src="https://images6.alphacoders.com/929/thumb-1920-929023.jpg" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img
-                src="https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/3x4giCBAOMRFnrYo1Z3PPz/ed4cd8437316e3d06f786b805ca7520b/Division2-FreeTrial-hero_art-1920x1080_NO-LOGO.jpg"
-                alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://www.gtaku.net/gallery/1588743555aa2.jpg" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://blog.kakaocdn.net/dn/dbiLiT/btqQJFd8iWn/5p3fKpBKYRsmJfKhd0WtK0/img.jpg" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="http://itcm.co.kr/files/attach/images/813/815/601/007/8185337c7c69bc98ab693ce0b329a712.jpg" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://gmedia.playstation.com/is/image/SIEPDC/sekiro-shadows-die-twice-screen-01-ps4-eu-21jun18?$native$" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://wallpaperaccess.com/full/391154.jpg" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://www.gtaku.net/files/attach/images/68/838/148/9b4be613a65351376d0352de744096d8.jpg" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://i.pinimg.com/originals/fd/c2/24/fdc2247a17c911db8bcdc65b6aa4557b.jpg" alt=""></a>
-          </div>
+        <div class="swiper-wrapper" id ="game-banner-pro">
         </div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
@@ -122,45 +138,14 @@
       </div>
     </div>
 
-    <div class="inner">
+    <div class="inner item-hot">
         <h1>HOT</h1>
-      <ul>
-        
+      <ul id="item-hot">
       </ul>
     </div>
-
     <div class="promotion">
       <div class="swiper mySwiper2">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <a href="#"><img src="https://wallpaperaccess.com/full/827473.png" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img
-                src="https://i.pinimg.com/originals/61/d8/a1/61d8a1867537bd19d058de1c4e2cd2d7.jpg"
-                alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://t1.daumcdn.net/cfile/tistory/9929AB375B45392122" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://cdn.wccftech.com/wp-content/uploads/2019/07/Monster-Hunter-World-Iceborne-gameplay.jpg" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://wallpaperaccess.com/full/414982.jpg" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://pbs.twimg.com/media/E_z0PU7UcAk0pxq.jpg:large" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://images4.alphacoders.com/676/thumb-1920-676369.jpg" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://wallpapercave.com/wp/wp2309666.jpg" alt=""></a>
-          </div>
-          <div class="swiper-slide">
-            <a href="#"><img src="https://wallpaperaccess.com/full/889464.jpg" alt=""></a>
-          </div>
+        <div class="swiper-wrapper" id ="game-banner-hot">
         </div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
