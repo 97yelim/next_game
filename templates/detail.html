@@ -3,7 +3,7 @@
     <head>
 
         <!-- Webpage Title -->
-        <title>Home | SWEETER</title>
+        <title>Home | Nextgame</title>
 
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -21,65 +21,95 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
         <script>
-          $(document).ready(function () {
+          $(document).ready(function(){
+            let getLink = window.location.search;
+            let title = decodeURI(getLink.split('?')[1]);
+            get_this_game(title);
             listing();
-          });
+        })
 
-          function listing(){
+        function get_this_game(title){
             $.ajax({
-                type: 'GET',
-                url: '/detail/<num>',
+                type: "POST",
+                url: "/detailname",
+                data: {title_give: title},
+                success: function (reponse){
+                  console.log(reponse)
+                  let youtube = reponse['title']['youtube']
+                  let title = reponse['title']['title']
+                  let price = reponse['title']['price']
+                  let disc = reponse['title']['disc']
+
+                  let temp_youtube = `${youtube}`
+                  $('#youtube').append(temp_youtube)
+
+                  let temp_title = `${title}`
+                  $('#title').append(temp_title)
+                  
+                  let temp_price = `${price} <span>원</span>`
+                  $('#price').append(temp_price)
+                  
+
+                  let temp_disc = `${disc}`
+                  $('#disc').append(temp_disc)
+
+                }
+            })
+        };
+
+        function review_post() {
+          let comment = $('#review-comment').val();
+          let grade = $('#select-grade').val();
+          let user_nickname = '{{user_info.nickname}}';
+
+          if (comment == '') {
+            alert('빈칸은 리뷰를 작성할 수 없습니다.');
+            return;
+          }
+
+          $.ajax({
+            type: 'POST',
+            url: '/review/post',
+            data: {
+              comment_give: comment,
+              grade_give: grade,
+              user_nickname_give: user_nickname,
+            },
+            success: function (response) {
+              alert(response['msg']);
+              window.location.reload();
+            },
+          });
+        }
+
+        function get_posts() {
+            $.ajax({
+                type: "GET",
+                url: `/detail?${title}`,
                 data: {},
                 success: function (response) {
-                    let rows = response['review']
-                    for (let i = 0; i < rows.length ; i++){
-                        let review_comment = rows[i]['review_comment']
-                        let grade = rows[i]['grade']
-                        let nickname = rows[i]['nickname']
-                        let star_img = '⭐'.repeat(star)
+                    // 해당 페이지의 식물과 관련된 데이터만 받아왔음
+                    if (response["result"] == "success") {
+                        {#console.log(response["posts"])#}
+                        let posts = response["posts"]
+                        for (let i = 0; i < posts.length; i++) {
+                            let post = posts[i]
 
-                        let temp_html = `
-                        <div class="review-con wrap">
-                          <div class="comments">
-                            <p class="nick">${nickname} 님</p>
-                            <div class="comment">
-                              ${review_comment}
-                            </div>
-                          </div>
-                          <div class="comments-right">
-                            <div class="grade">${star_img}</div>
-                            <a href="#">삭제</a>
-                          </div>
-                        </div>
-                        <hr class="wrap">
-                        `
-                        $('#cards-box').append(temp_html)
+                            let temp_html = `<div class="card mb-3">
+									            <div class="card-body">
+									                <h5 class="card-title">${post['username']}</h5>
+									                <p class="card-text">${post['comment']}</p>
+									            </div>
+												<div class="comment_delete">
+                                                    <a href="#" class="delete" onclick="deleteStar('${post['comment']}')">삭제</a>
+                                                </div>
+									       </div>`
+                            $("#card-box").append(temp_html)
+                        }
                     }
                 }
             })
-          }
-
-          function review_write(){
-            let review_comment = $('#review-comment').val()
-            let grade = $('#select-grade').val()
-            let nickname = $('#nickname').text()
-
-            $.ajax({
-                type: 'POST',
-                url: '/detail/<num>',
-                data: { 
-                  review_comment_give: review_comment,
-                  grade_give: grade,
-                  nickname_give: nickname
-                },
-                success: function (response) {
-                    alert(response['msg'])
-                    window.location.reload()
-                }
-            });  
-          }
-
-
+        }
         </script>
         {% include 'head.html' %}
         
@@ -87,14 +117,14 @@
     </head>
     <body>
         <header>{% include 'header.html' %}</header>
-        <section class="youtube">
-          <iframe class="video" width="560" height="315" src="https://www.youtube.com/embed/8jmuLrP-KIA?autoplay=1&mute=1 " title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>   
+        <section class="youtube" id="youtube">
+          <!-- <iframe class="video" width="560" height="315" src="https://www.youtube.com/embed/8jmuLrP-KIA?autoplay=1&mute=1 " title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->   
         </script>
         </section>
         <section class="contents wrap">
-          <p id="title" class="title">Tom Clancy's The Division 2</p>
+          <p id="title" class="title"></p>
           <div class="price">
-            <p id="price" class="price">54,900 <span>원</span></p>
+            <p id="price" class="price"></p>
             <button class="buy-button" onclick="buy()">구매하기</button>
           </div>
         </section>
@@ -102,13 +132,6 @@
         <div class="pd-detail wrap">
           <p class="game-title">게임 정보</p>
           <div id="disc" class="disc">
-            치명적인 바이러스가 뉴욕을 비롯한 세계 곳곳을 강타하고 인류를 고통에 빠뜨린 지 7개월이 흘렀습니다. 바이러스가 발발하자 민간인으로 생활하던 디비전 요원들이 최후의 방어선 역할을 수행하기 위해 소집되었습니다. 그 후 지금까지 디비전 요원들은 남은 사람들을 구하기 위해 사투를 벌이고 있습니다.
-            <br>
-            <br>
-            디비전 역사상, 그 어느 때보다 위험한 상황이 발생했습니다. 지구상에서 가장 철통같은 방어선을 자랑하는 도시, 워싱턴 D.C.가 위험에 빠지며 국가 전역이 무너질 위기에 처한 것입니다. 워싱턴 D.C.를 잃는다면 국가가 무너지고 맙니다. 7개월이라는 기간 동안 현장에 머물던 디비전 요원인 당신과 팀원들이 전염병 이후 사회의 붕괴를 막을 마지막 희망입니다.
-            <br>
-            <br>
-            Ubisoft Massive와 `톰 클랜시의 디비전`제작진이 개발한 `톰 클랜시의 디비전 2`는 파괴된 워싱턴 D.C.를 배경으로 하는 오픈 월드, 액션 슈팅 RPG 게임입니다. 아름답고 상징적이면서 사실적인 환경과 다채롭고 새로운 설정을 결합하여, 플레이어는 실제와 같은 건물, 풍부한 RPG 시스템, 빠른 속도의 액션으로 이루어진 동일 시리즈의 정수를 경험할 수 있습니다. 단독 모드 또는 최대 4명의 플레이어와 팀을 이룬 협동 모드를 통해 메인 캠페인부터 한순간의 방심도 용납하지 않는 PvP 모드, 다크존 임무까지 다양한 활동을 수행할 수 있습니다.
           </div>
         </div>
         <hr class="wrap">
@@ -124,7 +147,7 @@
                 <option value="1">⭐</option>
             </select>
           </div>
-          <button class="review-button" onclick="review_write()">리뷰 작성</button>
+          <button class="review-button" onclick="review_post()">리뷰 작성</button>
         </div>
         <div class="review" id="review">
         </div>
