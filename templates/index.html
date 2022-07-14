@@ -44,8 +44,7 @@
           success: function (response) {
             let rows = response['game_info']
               for (let i = 0 ; i < rows.length; i++){
-                console.log(rows[i]['category'])
-                if(rows[i]['category'] == 'promotion'){
+                if(rows[i]['gamecategory'] == 'promotion'){
                 let title = rows[i]['title']
                 let img_url = rows[i]['img_url']
                 let banner_url = rows[i]['banner_url']
@@ -60,15 +59,14 @@
                                         <span><a href="http://localhost:5000/detail?${title}">${title}</a></span>
                                       </div>
                                       <div class="bottom-group">
-                                        <div class="rank">
-                                          <p class="star">⭐ <span class="num">9.7 점</span></p>
-                                        </div>
+                                        <div class="bottom-group">
                                         <div class="price">
                                           <span>￦ ${price}</span>
                                           <div class="buy">
                                             <p onclick="buy()">구매하기</p>
                                           </div>
                                         </div>
+                                      </div>
                                       </div>
                                     </div>
                                   </li>
@@ -93,13 +91,12 @@
                                         <span><a href="http://localhost:5000/detail?${title}">${title}</a></span>
                                       </div>
                                       <div class="bottom-group">
-                                        <div class="rank">
-                                          <p class="star">⭐ <span class="num">9.7 점</span></p>
-                                        </div>
-                                        <div class="price">
-                                          <span>￦ ${price}</span>
-                                          <div class="buy">
-                                            <p onclick="buy()">구매하기</p>
+                                        <div class="bottom-group">
+                                          <div class="price">
+                                            <span>￦ ${price}</span>
+                                            <div class="buy">
+                                              <p onclick="buy()">구매하기</p>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
